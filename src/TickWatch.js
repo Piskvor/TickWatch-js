@@ -7,10 +7,12 @@ export const TickWatch = function (options = {}, ...args) {
     // noinspection JSUnusedGlobalSymbols
     const methods = {
         start: function (results, data) {
+            if (!data.isCounting) {
+                data.timer = setTimeout(() => {
+                    next(getElement(data));
+                }, 1000);
+            }
             data.isCounting = true;
-            data.timer = setTimeout(() => {
-                next(getElement(data));
-            }, 1000);
             updateData(data);
             getElement(data).trigger('TickWatch.start', [data]);
             return results;
